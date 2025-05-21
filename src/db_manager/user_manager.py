@@ -1,9 +1,11 @@
 from bson import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 class UserManager:
-    def __init__(self, db):
+    def __init__(self, db, payment_manager):
         self.collection = db['users']
+        self.payment_manager = payment_manager
 
     def create_user(self, username, password, email):
         existing_username = self.get_user_by_username(username)
@@ -18,9 +20,18 @@ class UserManager:
             'username': username,
             'password': generate_password_hash(password),
             'email': email,
-            'premium_id': 0  # Mặc định là gói Free
+            'premium_id': 1,  # Mặc định là gói Trial
+            'registration_date': datetime.utcnow()  # Thêm ngày đăng ký
         }
         result = self.collection.insert_one(user)
+        
+        self.payment_manager.create_payment(
+            user_id=str(result.inserted_id),
+            amount=0,
+            payment_method='None',
+            premium_type_id=1
+        )
+        
         return str(result.inserted_id), None
 
     def update_premium_status(self, user_id, premium_id):
