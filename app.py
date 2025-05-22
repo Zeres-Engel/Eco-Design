@@ -37,11 +37,20 @@ logger.addHandler(console_handler)
 
 app = Flask(__name__, static_folder='app/static', template_folder='app/templates')
 
-# Try to connect to MongoDB, use mock database if connection fails
+# Try to connect to MongoDB (prioritize local Docker instance if available)
 try:
-    connection_string = os.getenv('MONGODB_URI')
+    # Try Docker MongoDB first, then fall back to remote MongoDB
+    connection_string = os.getenv('MONGODB_DOCKER_URI') or os.getenv('MONGODB_URI')
     db_manager = DBManager(connection_string)
-    logger.info("Connected to MongoDB successfully")
+    logger.info(f"Connected to MongoDB successfully using: {connection_string.split('@')[1] if '@' in connection_string else 'local connection'}")
+    
+    # Initialize database with premium types if needed
+    try:
+        db_manager.initialize_database()
+        logger.info("Database initialized with required collections")
+    except Exception as init_error:
+        logger.warning(f"Database initialization error: {str(init_error)}")
+        
 except Exception as e:
     logger.warning(f"Failed to connect to MongoDB: {str(e)}")
     logger.info("Using MockDBManager instead")

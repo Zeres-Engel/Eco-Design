@@ -1,5 +1,5 @@
-# Use an updated secure Python runtime as a parent image
-FROM python:3.11-slim-bookworm
+# Use Python 3.8 which is compatible with the pybind11 version in the project
+FROM python:3.8-slim-bullseye
 
 # Set the working directory to /app
 WORKDIR /app
@@ -27,7 +27,7 @@ RUN pip install --no-cache-dir \
     svgpathtools==1.6.1 \
     cairosvg==2.7.1 \
     pymongo==4.6.1 \
-    payos==1.0.0 \
+    payos==0.1.8 \
     python-dotenv==1.0.0
 
 # Copy all files and folders from the current directory to /app in the container
