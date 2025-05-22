@@ -5,3 +5,7 @@ report/~$report.pptx
 *.pyc
 *.pyc
 *.pyc
+.env
+log
+/log
+*.pyc
