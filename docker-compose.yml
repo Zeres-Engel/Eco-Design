@@ -1,21 +1,50 @@
 version: '3'
 
 services:
-  web:
+  app:
     build:
       context: .
       args:
         VERSION: ${VERSION:-latest}
     image: ecologicaldesign:${VERSION:-latest}
-    ports:
-      - "80:80"
-      - "5000:5000"
+    expose:
+      - "5000"
     volumes:
-      - ./aka_cad:/app/aka_cad
+      - ./app:/app/app
+      - ./src:/app/src
+      - ./lib:/app/lib
+      - ./utils:/app/utils
+      - ./log:/app/log
+    environment:
+      - MONGODB_URI=mongodb+srv://thanhnpse171408:5c50AB8DA0Znt08W@ecodesign.9eppu.mongodb.net/?retryWrites=true&w=majority&appName=ecodesign
+      - PAYOS_CLIENT_ID=2515ec70-1017-43cb-8594-8fe2ff84be5d
+      - PAYOS_API_KEY=4a8f0f99-f435-4d01-aeeb-85c9d11e4cad
+      - PAYOS_CHECKSUM_KEY=48ff943526d77a060868ab95808d4e0b8a67fa892e8c21fb65b235be01631bb9
     restart: unless-stopped
     command: >
       /bin/bash -c "
-        service nginx start &&
-        tmux new-session -d -s ecologicaldesign 'gunicorn -c /app/aka_cad/gunicorn.conf.py app:app' &&
-        /app/aka_cad/check_and_restart.sh
+        gunicorn -c gunicorn_config.py app:app
       "
+  
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./app/static:/app/app/static:ro
+      - ./data/certbot/conf:/etc/letsencrypt:ro
+      - ./data/certbot/www:/var/www/certbot:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+  
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
