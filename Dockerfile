@@ -1,8 +1,5 @@
-# Use an official Python runtime as a parent image
-FROM python:3.8-slim-buster
-
-# Thêm dòng này ở đầu Dockerfile
-ARG VERSION=latest
+# Use an updated secure Python runtime as a parent image
+FROM python:3.10-slim-bullseye
 
 # Set the working directory to /app
 WORKDIR /app
@@ -24,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python libraries in one step
-RUN pip install opencv-python-headless flask svgpathtools cairosvg gunicorn pymongo payos
+RUN pip install opencv-python-headless flask svgpathtools cairosvg pymongo payos python-dotenv
 
 # Copy all files and folders from the current directory to /app in the container
 COPY . /app
@@ -36,11 +33,11 @@ RUN rm -rf build && mkdir build && cd build && \
 
 ENV PYTHONPATH=/app/build:$PYTHONPATH
 
-# Expose port for Gunicorn
+# Create directory for logs
+RUN mkdir -p /app/log
+
+# Expose port for Flask
 EXPOSE 5000
 
-# Run Gunicorn when the container launches
-CMD ["gunicorn", "-c", "gunicorn_config.py", "app:app"]
-
-# Thêm label cho version
-LABEL version=$VERSION
+# Run Flask app directly
+CMD ["python", "app.py"]

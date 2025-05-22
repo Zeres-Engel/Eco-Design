@@ -1,23 +1,57 @@
 import os
+from dotenv import load_dotenv
 from payos import PayOS, PaymentData
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from utils import handle_nesting_request
 from src.db_manager import DBManager
+from src.db_manager.mock_manager import MockDBManager
 import hashlib
 import time
 from datetime import datetime, timedelta
 import logging
 import random
+import sys
 
-# Configure logging to write to a file named 'app.log'
-logging.basicConfig(filename='./log/app.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+# Load environment variables from .env file
+load_dotenv()
+
+# Configure logging to write to both file and console
+log_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+
+# File handler
+if not os.path.exists('./log'):
+    os.makedirs('./log')
+    
+file_handler = logging.FileHandler('./log/app.log')
+file_handler.setFormatter(log_formatter)
+
+# Console handler
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setFormatter(log_formatter)
+
+# Root logger configuration
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+logger.addHandler(file_handler)
+logger.addHandler(console_handler)
 
 app = Flask(__name__, static_folder='app/static', template_folder='app/templates')
 
-connection_string = "mongodb+srv://thanhnpse171408:5c50AB8DA0Znt08W@ecodesign.9eppu.mongodb.net/?retryWrites=true&w=majority&appName=ecodesign"
-db_manager = DBManager(connection_string)
+# Try to connect to MongoDB, use mock database if connection fails
+try:
+    connection_string = os.getenv('MONGODB_URI')
+    db_manager = DBManager(connection_string)
+    logger.info("Connected to MongoDB successfully")
+except Exception as e:
+    logger.warning(f"Failed to connect to MongoDB: {str(e)}")
+    logger.info("Using MockDBManager instead")
+    db_manager = MockDBManager()
 
-payOS = PayOS(client_id="2515ec70-1017-43cb-8594-8fe2ff84be5d", api_key="4a8f0f99-f435-4d01-aeeb-85c9d11e4cad", checksum_key="48ff943526d77a060868ab95808d4e0b8a67fa892e8c21fb65b235be01631bb9")
+payOS = PayOS(
+    client_id=os.getenv('PAYOS_CLIENT_ID'),
+    api_key=os.getenv('PAYOS_API_KEY'),
+    checksum_key=os.getenv('PAYOS_CHECKSUM_KEY')
+)
 
 @app.route('/')
 def home():

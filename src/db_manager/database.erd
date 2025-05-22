@@ -4,9 +4,9 @@
   "settings": {
     "width": 2000,
     "height": 2000,
-    "scrollTop": -48.5538,
-    "scrollLeft": -73.2354,
-    "zoomLevel": 0.91,
+    "scrollTop": -112.8686,
+    "scrollLeft": -124.0506,
+    "zoomLevel": 0.79,
     "show": 431,
     "database": 4,
     "databaseName": "",
@@ -691,16 +691,5 @@
     "indexEntities": {},
     "indexColumnEntities": {},
     "memoEntities": {}
-  },
-  "lww": {
-    "OYxvhCkwDuOlHfk8XgCev": [
-      "tableColumnEntities",
-      1730982092284,
-      -1,
-      {
-        "name": 1730982110179,
-        "dataType": 1730982112634
-      }
-    ]
   }
 }
