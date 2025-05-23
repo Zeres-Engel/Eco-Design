@@ -2,11 +2,6 @@ report/~$report.pptx
 *.pptx
 *.pyc
 */__pycache__
-*.pyc
-*.pyc
-*.pyc
 .env
-log
 /log
-*.pyc
 *.log
