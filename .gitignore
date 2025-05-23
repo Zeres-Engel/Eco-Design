@@ -5,3 +5,4 @@ report/~$report.pptx
 .env
 /log
 *.log
+log/app.log
