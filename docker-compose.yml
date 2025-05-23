@@ -6,8 +6,11 @@ services:
       context: .
     image: ecologicaldesign:local
     container_name: ecodesign
-    ports:
-      - "5000:5000"
+    # Bỏ port 5000 vì sẽ sử dụng Nginx làm reverse proxy
+    # ports:
+    #   - "5000:5000"
+    expose:
+      - "5000"
     volumes:
       - ./app:/app/app
       - ./src:/app/src
@@ -19,6 +22,25 @@ services:
     depends_on:
       - mongodb
     restart: unless-stopped
+    networks:
+      - app-network
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: ecodesign-nginx
+    ports:
+      - "8080:80"
+      - "8443:443"
+    depends_on:
+      - app
+    restart: unless-stopped
+    volumes:
+      - ./nginx/sites-available:/etc/nginx/sites-available
+      - ./nginx/sites-enabled:/etc/nginx/sites-enabled
+      - ./app/static:/app/app/static
+    networks:
+      - app-network
 
   mongodb:
     image: mongo:latest
@@ -37,3 +59,7 @@ services:
 
 volumes:
   mongodb_data:
+
+networks:
+  app-network:
+    driver: bridge
