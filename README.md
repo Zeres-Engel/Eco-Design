@@ -1,10 +1,20 @@
 # EcoDesign Editor - Advanced SVG Editor with AI Nesting
 
-![EcoDesign Logo](docs/SVG/logo.svg)
+<div align="center">
+
+<img src="docs/SVG/logo.svg" alt="EcoDesign Logo" width="400" height="400">
+
+**🚀 See Nesting in Action:**
+
+![Nesting Demo](docs/GIF/nestingdemo.gif)
+
+*AI-powered nesting automatically optimizes material usage*
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Available-brightgreen)](http://ecologicaldesign.tech/)
 [![Docker](https://img.shields.io/badge/Deployment-Docker-blue)](https://www.docker.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+</div>
 
 ## 🌟 Overview
 
@@ -15,7 +25,7 @@
 ### Why EcoDesign Editor?
 
 - **Visual SVG Editing**: Edit SVG files through an intuitive interface instead of complex code
-- **AI-Powered Nesting**: Optimize material usage with advanced packing algorithms
+- **AI-Powered Nesting**: Optimize material usage with advanced packing algorithms powered by **C++**
 - **Web-Based**: No installation required - works directly in your browser
 - **Professional Tools**: Complete toolkit for logo design, laser cutting preparation, and CNC optimization
 
@@ -33,6 +43,64 @@
 ![Payment Page](docs/images/paymentpage.png)
 *Flexible pricing plans to support the project*
 
+## 📚 User Guide
+
+### 🎨 **Basic SVG Operations**
+
+#### **Import SVG Files**
+1. Click **File** in the menu
+2. Select **Open SVG**
+3. Choose your SVG file to upload
+4. Your design will appear in the workspace
+
+#### **Export Your Work**
+- **Save Image**: Export your drawing as an SVG file
+  - Go to **File** → **Save Image**
+- **Export PNG**: Convert your SVG to PNG format
+  - Go to **File** → **Export PNG**
+- **Save SVG Source**: Save to your account's database
+  - Go to **File** → **Save SVG Source**
+  - Your work is automatically stored and restored when you log in from any device
+
+#### **View Source Code**
+- **Keyboard shortcut**: Press `Ctrl+U`
+- **Menu option**: Go to **View** → **Source...**
+- This shows the actual SVG code you've created
+
+### 🔧 **Advanced Nesting Guide**
+
+**Nesting** is our signature feature that automatically optimizes how objects fit within materials, reducing waste and improving efficiency. **Powered by high-performance C++ algorithms** for lightning-fast optimization.
+
+#### **Step-by-Step Nesting Process:**
+
+1. **Create Material Boundary**:
+   - Draw a rectangle representing your material sheet
+   - Adjust dimensions to match your actual material size
+   - Right-click and select **Make Material** to convert it from object to material boundary
+
+2. **Add Objects to Nest**:
+   - Draw any shapes you want to fit inside the material
+   - These can be circles, rectangles, complex paths, or imported designs
+   - Create as many objects as needed
+
+3. **Execute Nesting**:
+   - Select all objects you want to nest (hold Ctrl and click multiple objects)
+   - Click the **Nesting Objects** button
+   - Watch as the AI automatically arranges your objects for optimal space usage
+
+4. **Review Results**:
+   - Objects are automatically positioned to minimize waste
+   - Material usage efficiency is calculated and displayed
+   - Fine-tune positions if needed
+
+![Nesting Result](docs/images/nesting_result.png)
+*Example of C++-powered nesting optimization showing dramatic space efficiency improvement*
+
+#### **Nesting Tips**:
+- Use rectangular materials for best optimization results
+- Ensure adequate spacing between objects for cutting tools
+- Premium accounts get access to advanced nesting parameters
+
 ## ✨ Key Features
 
 ### 🎨 **Core SVG Editor**
@@ -45,6 +113,7 @@
 
 ### 🔧 **AI Nesting Algorithm** - Unique Feature
 - **Material Optimization**: Automatically arrange shapes to minimize waste
+- **C++ Performance**: Lightning-fast calculations using optimized C++ algorithms
 - **Laser Cutting Ready**: Perfect for CNC machines and laser cutters
 - **Custom Spacing**: Adjustable padding between objects
 - **Multi-Material Support**: Optimize across multiple sheets
@@ -60,7 +129,7 @@
 - ❌ No nesting optimization
 
 #### **Premium Features**
-- ✅ **Full Nesting Algorithm**: Complete material optimization
+- ✅ **Full Nesting Algorithm**: Complete C++-powered material optimization
 - ✅ **Advanced Drawing Tools**: Professional-grade editing features
 - ✅ **Premium Export**: PDF, EPS, high-resolution formats
 - ✅ **Cloud Storage**: 1GB personal / 10GB business
@@ -101,11 +170,18 @@ app/static/js/
 └── [30+ specialized modules]
 ```
 
-### **AI Nesting Engine**
-Our custom `aka_cad` library leverages:
-- **C++ Core**: High-performance geometric algorithms
+### **High-Performance C++ Nesting Engine**
+Our custom `aka_cad` library delivers industry-leading performance:
+
+![Nesting Result](docs/images/nesting_result.png)
+*Real nesting results showing C++ algorithm efficiency*
+
+**Technical Implementation:**
+- **C++ Core**: High-performance geometric algorithms written in optimized C++
 - **Python Bindings**: Seamless integration via [pybind11](https://github.com/pybind/pybind11)
 - **Advanced Algorithms**: Inspired by [libnest2d](https://github.com/tamasmeszaros/libnest2d)
+- **Real-time Processing**: C++ enables instant optimization even for complex layouts
+- **Memory Efficient**: Optimized data structures for handling large numbers of objects
 
 ## 🐳 Deployment
 
@@ -170,7 +246,7 @@ PAYOS_CHECKSUM_KEY=your_checksum_key
 ## 🏆 What Makes Us Different
 
 ### **Focus on Nesting Optimization**
-Unlike traditional SVG editors, EcoDesign Editor specializes in **material optimization**. Our nesting algorithm can reduce material waste by up to 40%, making it invaluable for:
+Unlike traditional SVG editors, EcoDesign Editor specializes in **material optimization powered by C++**. Our nesting algorithm can reduce material waste by up to 40%, making it invaluable for:
 - Manufacturing and production
 - Maker projects and prototyping
 - Cost-sensitive cutting operations
