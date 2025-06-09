@@ -3,6 +3,6 @@ report/~$report.pptx
 *.pyc
 */__pycache__
 .env
-/log
+log
 *.log
 log/app.log
