@@ -5,14 +5,14 @@ class PaymentManager:
     def __init__(self, db):
         self.collection = db['payments']
 
-    def create_payment(self, user_id, amount, payment_method, premium_type_id):
+    def create_payment(self, user_id, amount, payment_method, premium_type_id, status='pending'):
         order_code = self.get_next_order_code()
         payment = {
             'user_id': ObjectId(user_id),
             'amount': amount,
             'payment_date': datetime.utcnow(),
             'payment_method': payment_method,
-            'status': 'pending',
+            'status': status,
             'premium_type_id': premium_type_id,
             'order_code': order_code
         }

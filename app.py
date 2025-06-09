@@ -41,6 +41,7 @@ app = Flask(__name__, static_folder='app/static', template_folder='app/templates
 try:
     # Try Docker MongoDB first, then fall back to remote MongoDB
     connection_string = os.getenv('MONGODB_DOCKER_URI') or os.getenv('MONGODB_URI')
+    logger.info(f"Attempting to connect to MongoDB with: {connection_string}")
     db_manager = DBManager(connection_string)
     logger.info(f"Connected to MongoDB successfully using: {connection_string.split('@')[1] if '@' in connection_string else 'local connection'}")
     
