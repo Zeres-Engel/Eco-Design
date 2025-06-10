@@ -16,7 +16,6 @@ services:
       - ./src:/app/src
       - ./lib:/app/lib
       - ./utils:/app/utils
-      - ./log:/app/log
     env_file: 
       - .env
     depends_on:
